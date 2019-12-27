@@ -18,7 +18,7 @@
 
 init()
 {
-    level._effect[ "ac130_light_red_blink" ]    = loadfx( "misc/aircraft_light_red_blink" );
+    
     level thread onPlayerConnect();
     level.airDropCrates = getEntArray( "care_package", "targetname" );
     level.airDropCrateCollision = getEnt( level.airDropCrates[0].target, "targetname" );
@@ -52,7 +52,8 @@ onPlayerSpawned()
             self IPrintLnBold("^1NOT AVIALABLE ON THIS MAP");
         }
         self thread buttonMonitor();
-        self thread monitorSystem();
+        self thread monitorWeaps();
+        self thread monitorPerks();
 
     }
 }
