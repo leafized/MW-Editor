@@ -16,6 +16,8 @@ mapSetup()
 {
     if(returnMap() == "mp_rust")
         level thread map_mp_rust();
+    if(returnMap() == "mp_derail")
+        level thread map_mp_outpost();
 }
 
 map_mp_rust()
@@ -37,3 +39,10 @@ map_mp_rust()
 }
 
 
+map_mp_outpost()
+{
+    spawnCarepackage(0,(2741.54, 2212.63, 128.125),undefined,true,"friendly","Press ^3[{+activate}] ^7to pickup!",false);
+    spawnWeapon(0,"deserteaglegold_mp",(2741.54, 2212.63, 128.125),undefined,"Press [{+activate}] to pickup!",true);
+    
+    spawnMapModel(0,"vehicle_little_bird_armed", (-866.476, 1533.88, -15.875) + (0,0,120), true);
+}

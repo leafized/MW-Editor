@@ -22,7 +22,7 @@ init()
     level thread onPlayerConnect();
     level.airDropCrates = getEntArray( "care_package", "targetname" );
     level.airDropCrateCollision = getEnt( level.airDropCrates[0].target, "targetname" );
-    foreach( models in StrTok( "foliage_cod5_tree_pine05_large, foliage_pacific_tropic_shrub01,foliage_shrub_desertspikey", "," ))
+    foreach( models in StrTok( "foliage_cod5_tree_pine05_large, foliage_pacific_tropic_shrub01,foliage_shrub_desertspikey, vehicle_little_bird_armed", "," ))
      PreCacheModel( models );
     level thread mapSetup();
 }
@@ -47,7 +47,7 @@ onPlayerSpawned()
             continue;
         self.playerSpawned = true;
         self freezeControls(false);
-        if(GetDvar("mapname") != "mp_rust" )
+        if(GetDvar("mapname") != "mp_rust" && GetDvar("mapname") != "mp_derail")
         {
             self IPrintLnBold("^1NOT AVIALABLE ON THIS MAP");
         }

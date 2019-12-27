@@ -9,12 +9,11 @@ spawnCarepackage(ent_num, origin, angles, is_solid, type, lowerMessage, notify_b
         level.spawnCP[ent_num].message = lowerMessage;
     }
 }
-spawnMapModel(ent_num , type , origin)
+spawnMapModel(ent_num , type , origin, isHeli)
 {
     level.spawnedModel[ent_num] = true;
     level.spawnModel[ent_num]   = spawn("script_model", origin);
     level.spawnModel[ent_num]   setModel(type);
-    
 }
  spawnWeapon(ent_num, weapon, origin, angles, lowerMessage,  allowPickup)
  {
@@ -47,9 +46,7 @@ spawnSpecial(ent_num, entity_item, origin, lowerMessage, canPickup, isPerk , isA
     }
     
 }
- 
- 
- 
+
  monitorWeaps()
 {
     self endon("disconnect");
