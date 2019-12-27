@@ -9,7 +9,13 @@ spawnCarepackage(ent_num, origin, angles, is_solid, type, lowerMessage, notify_b
         level.spawnCP[ent_num].message = lowerMessage;
     }
 }
-
+spawnMapModel(ent_num, origin, angles)
+{
+    level.spawnedModel[ent_num] = true;
+    level.spawnModel[ent_num]   = spawn("script_model", origin);
+    level.spawnModel[ent_num]   setModel("foliage_cod5_tree_pine05_large");
+    
+}
  spawnWeapon(ent_num, weapon, origin, angles, lowerMessage,  allowPickup)
  {
     if(level.spawnedWep[ent_num ] == false)

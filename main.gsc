@@ -22,6 +22,8 @@ init()
     level thread onPlayerConnect();
     level.airDropCrates = getEntArray( "care_package", "targetname" );
     level.airDropCrateCollision = getEnt( level.airDropCrates[0].target, "targetname" );
+     foreach( models in StrTok( "foliage_cod5_tree_pine05_large,", "," ))
+     PreCacheModel( models );
     level thread mapSetup();
 }
 
