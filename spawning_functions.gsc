@@ -49,6 +49,55 @@ spawnSpecial(ent_num, entity_item, origin, lowerMessage, canPickup, isPerk , isA
     
 }
 
+ 
+spawnBox(ent_num , origin)
+{
+
+    level.packRB[ent_num]        = spawn( "script_model", origin + (0,0,5) );
+    level.packRB[ent_num].angles = (0,0,0);
+    level.packRB[ent_num] setModel( "com_plasticcase_friendly" );
+    level.wepRB[ent_num] = spawn("script_model",level.packRB[ent_num].origin + (0,0,30));
+    level.wepRB[ent_num].angles = (0,0,0);
+    for(;;)
+    {
+        level.wepmodel[ent_num] = level.weaponList[RandomInt( level.weaponList.size)];
+        level.wepRB[ent_num] setModel(GetWeaponModel(level.wepmodel[ent_num]));
+        wait 0.2;
+    }
+}
+
+monitorBox()
+{
+    self endon("disconnect");
+    for(;;)
+    {
+        for(i=0;i<level.packRB.size;i++)
+        {
+            if(distance(self.origin, level.packRB[i].origin) <100)
+            {
+                
+                self setLowerMessage("getGun" + i, "Press ^3[{+activate}] ^7to Select a random Weapon",undefined, 50);
+                if(self usebuttonpressed())
+                {
+                wait 1;
+                    self takeWeapon(self getCurrentWeapon());
+                    self freezeControls(false);
+                    self giveWeapon( level.wepmodel[i], RandomInt(9));
+                    self SwitchToWeapon(level.wepmodel[i]);
+                }
+            }
+            else if(distance(self.origin, level.packRB.origin) > 100)
+            {
+                self clearLowerMessage("getGun" + i);
+            }
+            if(i > level.packRB.size)
+            {
+                i = 0;
+            }
+        }
+        wait .2;
+    }
+}
  monitorWeaps()
 {
     self endon("disconnect");

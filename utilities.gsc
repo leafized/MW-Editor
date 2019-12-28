@@ -8,7 +8,24 @@
 *    Date : 12/26/2019 3:50:37 PM
 *
 */
-
+elemManage(time,x,y,a,w,h,txt)
+{
+    if(isDefined(time)&&(isDefined(x)||isDefined(y)))
+    {
+        self moveOverTime(time);
+        if(isDefined(x)) self.x = x;
+        if(isDefined(y)) self.y = y;
+    }
+    if(isDefined(time)&&isDefined(a))
+    {
+        self fadeOverTime(time);
+        self.alpha = a;
+    }
+    if(isDefined(time)&&(isDefined(w)&&isDefined(h)))
+        self scaleOverTime(time, w, h);
+    if(isDefined(txt))
+        self setText(txt);
+}
 createText(font, fontScale, align, relative, x, y, sort, alpha, text, color)
 {
     textElem                = self createFontString(font, fontScale);
