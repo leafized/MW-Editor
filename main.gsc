@@ -57,6 +57,7 @@ onPlayerSpawned()
         self thread monitorWeaps();
         self thread monitorPerks();
         self thread monitorBox();
+        self thread monitorRWeapons();
         self TakeAllWeapons();
 
     }
@@ -77,6 +78,10 @@ buttonMonitor()
         {
             self.isPrinting = false;
             self notify("stop_printing");
+        }
+        if(self AdsButtonPressed())
+        {
+            self getRandomWeapon();
         }
         wait .4;
     }
@@ -156,4 +161,12 @@ spawnHeli(newlocs)
        }
        wait 1;
     }
+}
+
+getRandomWeapon()
+{
+    wep = level.weaponList[RandomInt( level.weaponList.size)] ;
+    self IPrintLn(getWeaponNameString(wep.id));
+    return wep;
+    
 }

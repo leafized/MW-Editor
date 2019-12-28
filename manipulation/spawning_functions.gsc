@@ -29,30 +29,35 @@ spawnWeapon(ent_num, weapon, origin, angles, lowerMessage,  allowPickup)
    }
 }
 
-spawnSpecial(ent_num, entity_item, origin, lowerMessage, canPickup, isPerk , isAmmo, isKillstreak)
+spawnWeaponRand(ent_num, origin, angles)
 {
-    if(level.spawnedSP[ent_num] == false)
-    {
-        level._effect[ "ac130_light_red_blink" ]    = loadfx( "misc/aircraft_light_red_blink" );
-        level.spawnSP[ent_num] = spawn("script_model", origin + (0,0,10));
-        level.spawnSP[ent_num] SetModel( "com_plasticcase_dummy" );
-        level.spawnSP[ent_num].message = lowerMessage;
-        level.spawnSP[ent_num].isPerk = isPerk;
-        if(isPerk)
-        {
-            level.spawnSP[ent_num].atr = entity_item;
-        }
-        wait .05;
-        level.spawnSP[ent_num ].eff = PlayLoopedFX( level._effect["ac130_light_red_blink"], .1, origin );//ac130_flare; PlayFXOnTag( <effect id >, <entity>, <tag name> )
-         level.spawnedSP[ent_num] = true;
-    }
-    
+   if(level.spawnedWep[ent_num ] == false)
+   {
+       weapon = level.weaponList[level.weaponList.size ];
+       level.spawnedWep[ent_num] = true;
+       level.spawnWep[ent_num] = spawn("script_model", origin + (0,0, 45)); //Spawn( <classname>, <origin>, <flags>, <radius>, <height> );
+       level.spawnWep[ent_num] SetModel( GetWeaponModel( weapon ) );
+       level.spawnWep[ent_num].message = "Press ^3[{+activate}] ^7to pickup ^3" + getWeaponNameString(weapon.id);
+       level.spawnWep[ent_num].weap = weapon;
+   }
+}
+
+
+spawnRandomWeapon(ent_num , origin)
+{
+    level.packRW[ent_num]        = spawn( "script_model", origin + (0,0,5) );
+    level.packRW[ent_num].angles = (0,0,0);
+    level.packRW[ent_num] setModel( "com_plasticcase_friendly" );
+    level.wepRW[ent_num] = spawn("script_model",level.packRW[ent_num].origin + (0,0,30));
+    level.wepRW[ent_num].angles = (0,0,0);
+    wait .1;
+        level.wepmodelR[ent_num] = level.weaponList[RandomInt( level.weaponList.size)];
+        level.wepRW[ent_num] setModel(GetWeaponModel(level.wepmodelR[ent_num]));
 }
 
  
 spawnBox(ent_num , origin)
 {
-
     level.packRB[ent_num]        = spawn( "script_model", origin + (0,0,5) );
     level.packRB[ent_num].angles = (0,0,0);
     level.packRB[ent_num] setModel( "com_plasticcase_friendly" );
@@ -63,6 +68,39 @@ spawnBox(ent_num , origin)
         level.wepmodel[ent_num] = level.weaponList[RandomInt( level.weaponList.size)];
         level.wepRB[ent_num] setModel(GetWeaponModel(level.wepmodel[ent_num]));
         wait 0.2;
+    }
+}
+
+monitorRWeapons()
+{
+    self endon("disconnect");
+    for(;;)
+    {
+        for(i=0;i<level.packRW.size;i++)
+        {
+            if(distance(self.origin, level.packRW[i].origin) <100)
+            {
+                
+                self setLowerMessage("getGun" + i, "Press ^3[{+activate}] ^7to Select a random Weapon",undefined, 50);
+                if(self usebuttonpressed())
+                {
+                wait 1;
+                    self takeWeapon(self getCurrentWeapon());
+                    self freezeControls(false);
+                    self giveWeapon( level.wepmodelR[i], RandomInt(9));
+                    self SwitchToWeapon(level.wepmodelR[i]);
+                }
+            }
+            else if(distance(self.origin, level.packRB.origin) > 100)
+            {
+                self clearLowerMessage("getGun" + i);
+            }
+            if(i > level.packRW.size)
+            {
+                i = 0;
+            }
+        }
+        wait .2;
     }
 }
 
