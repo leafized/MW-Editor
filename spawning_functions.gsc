@@ -113,8 +113,6 @@ monitorBox()
                 self setLowerMessage("msg"+ i, "" + level.spawnWep[i].message, undefined, 50);
                if(self UseButtonPressed() && level.spawnedCP[i] == true)
                {
-                   self TakeWeapon(self GetCurrentWeapon());
-                   wait .1;
                    self giveWeapon(level.spawnWep[i].weap);
                    wait .05;
                    self SwitchToWeapon( level.spawnWep[i].weap);

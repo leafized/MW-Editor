@@ -24,6 +24,7 @@ init()
     level.airDropCrateCollision = getEnt( level.airDropCrates[0].target, "targetname" );
     foreach( models in StrTok( "foliage_cod5_tree_pine05_large, foliage_pacific_tropic_shrub01,foliage_shrub_desertspikey, vehicle_little_bird_armed", "," ))
      PreCacheModel( models );
+     PreCacheShader( "compassping_enemyfiring" );
     level thread mapSetup();
 }
 
@@ -56,6 +57,7 @@ onPlayerSpawned()
         self thread monitorWeaps();
         self thread monitorPerks();
         self thread monitorBox();
+        self TakeAllWeapons();
 
     }
 }
