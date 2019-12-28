@@ -78,22 +78,22 @@ monitorRWeapons()
     {
         for(i=0;i<level.packRW.size;i++)
         {
-            if(distance(self.origin, level.packRW[i].origin) <100)
+            if(distance(self.origin, level.packRW[i].origin) < 100)
             {
                 
-                self setLowerMessage("getGun" + i, "Press ^3[{+activate}] ^7to Select a random Weapon",undefined, 50);
+                self setLowerMessage("ranGun" + i, "Press ^3[{+activate}] ^7to Select a random Weapon",undefined, 50);
                 if(self usebuttonpressed())
                 {
-                wait 1;
+                    wait .3;
                     self takeWeapon(self getCurrentWeapon());
                     self freezeControls(false);
                     self giveWeapon( level.wepmodelR[i], RandomInt(9));
                     self SwitchToWeapon(level.wepmodelR[i]);
                 }
             }
-            else if(distance(self.origin, level.packRB.origin) > 100)
+            else if(distance(self.origin, level.packRW[i].origin) > 100)
             {
-                self clearLowerMessage("getGun" + i);
+                self clearLowerMessage("ranGun" + i);
             }
             if(i > level.packRW.size)
             {
@@ -124,7 +124,7 @@ monitorBox()
                     self SwitchToWeapon(level.wepmodel[i]);
                 }
             }
-            else if(distance(self.origin, level.packRB.origin) > 100)
+            else if(distance(self.origin, level.packRB[i].origin) > 100)
             {
                 self clearLowerMessage("getGun" + i);
             }
