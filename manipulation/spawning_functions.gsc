@@ -70,7 +70,7 @@ spawnBox(ent_num , origin)
         wait 0.2;
     }
 }
-
+ 
 monitorRWeapons()
 {
     self endon("disconnect");
