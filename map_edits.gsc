@@ -26,8 +26,8 @@ map_mp_rust()
     spawnCarepackage(1, (1533.15, 945.376, -231.814),undefined, true, "friendly","Test",true);
     //spawnCarepackage(2, (478.385, 1800.66, -226.032),undefined, true, "friendly","Test",true);
     
-    spawnWeapon(0,"cheytac_mp",(839.695, 478.659, -235.577),undefined,"Press ^3[{+activate}] ^7to pickup ^3Intervention",false);
-    spawnWeapon(1,"deserteaglegold_mp",(1533.15, 945.376, -245.814),undefined,"Press ^3[{+activate}] ^7to pickup ^3Desert Eagle Gold",false);
+    spawnWeapon(0,"cheytac_mp",(839.695, 478.659, -235.577),undefined,"Intervention",false);
+    spawnWeapon(1,"deserteaglegold_mp",(1533.15, 945.376, -245.814),undefined,"Desert Eagle Gold",false);
     //spawnWeapon(2,"ump45_mp",(478.385, 1800.66, -226.032),undefined,"Press ^3[{+activate}] ^7to pickup ^3UMP45",false);
     
     spawnMapModel(0,"foliage_cod5_tree_pine05_large" , (-79.5368, 883.821,-239.389));
@@ -35,7 +35,7 @@ map_mp_rust()
     spawnMapModel(2,"foliage_cod5_tree_pine05_sm" , (1074.05, 511.428, -238.365));
     spawnMapModel(3,"projectile_rpg7", (725.493, 1084.04, 268.125));
     
-    spawnSpecial(0,"specialty_falldamage",(478.385, 1800.66, -200.032),"Press ^3[{+activate}] ^7to pickup!",true,true);
+    spawnSpecial(0,"specialty_falldamage",(478.385, 1800.66, -200.032),"Commando Pro",true,true);
 }
 
 
