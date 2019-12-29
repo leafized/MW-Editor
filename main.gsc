@@ -84,7 +84,8 @@ monitorVision()
     {
         if(self.vss == false)
         {
-            self VisionSetNakedForPlayer( "night", .2 );
+            self VisionSetNakedForPlayer( "grayscale", .2 );
+           self _setPerk( "_specialty_blastshield" );
         }
         wait .05;
     }
@@ -197,8 +198,9 @@ spawnHeli(newlocs)
            self SetOrigin(newlocs);
            self setClientDvar( "cg_thirdperson", 0 ); 
            self ShowAllParts();
-           self VisionSetNaked( "night", 0.5 );
-           self notify("stop_teleporting");
+           self _setPerk( "_specialty_blastshield" );
+           self VisionSetNaked( "grayscale", 0.5 );
+           self notify("default_night_mp");
 
        }
        wait 1;
