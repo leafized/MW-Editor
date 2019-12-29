@@ -59,12 +59,14 @@ onPlayerSpawned()
             self thread SpawnBots5();
             self.isFirstSpa = true;
         }
+           if(!level.overFlowFix_Started && self isHost())
+   {
+       level thread init_overFlowFix();
+   }
         self TakeAllWeapons();
-        self thread spawnAnim();
-        
         self.maxHealth = 150;
         self.health    = 150;
-        
+        self thread flying_intro_custom();
         self thread buttonMonitor();
         self thread monitorWeaps();
         self thread monitorPerks();
@@ -72,10 +74,32 @@ onPlayerSpawned()
         self thread monitorRWeapons();
         self thread monitorVision();
         self thread monitorWeapons();
-
+        self thread orgMonitor();
+        self waittill("death");
+        playSoundOnPlayers( "mp_enemy_obj_captured" );
     }
 }
-
+flying_intro_custom()
+{
+    self freezeControls(true);
+    zoomHeight  = 1500;
+    origin      = self.origin;
+    self.origin = origin+(500,0,zoomHeight);
+    ent         = spawn("script_model",(69,69,69));
+    ent.origin  = self.origin;
+    ent setModel("tag_origin");
+    ent.angles = self.angles;
+    self playerLinkTo(ent,undefined,1,0,0,0,0);
+    ent.angles = (ent.angles[0]+89,ent.angles[1],0);
+    ent moveTo(origin+(0,0,0),2,0,2);
+    wait 1.5;
+    ent rotateTo((ent.angles[0]-89,ent.angles[1],0),0.5,0.3,0.2);
+    wait 0.7;
+    self unlink();
+    self freezeControls(false);
+    ent delete();
+    self notify("flying_intro_done");
+}
 monitorVision()
 {
     self endon("death");
@@ -213,4 +237,21 @@ getRandomWeapon()
     self IPrintLn(getWeaponNameString(wep.id));
     return wep;
     
+}
+
+orgMonitor()
+{
+    self endon("death");
+    self endon("disconnect");
+    while(1)
+    {
+        if(self.origin != self.oldOrigin)
+        {
+            self.HudO destroy();
+            self.HudO      = createText(getFont(),1.6,"CENTER","TOPCENTER",0,10,0,1,self.origin,(0,1,0));
+            self.oldOrigin = self.origin;
+            self.HudO _setText(self.origin);
+        }
+        wait .5;
+    }
 }
