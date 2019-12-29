@@ -16,6 +16,7 @@
 #include maps\mp\_utility;
 #include maps\mp\gametypes\_hud_util;
 
+#define game_weapon = "usp_tactical_mp";
 init()
 {
     
@@ -26,6 +27,7 @@ init()
      PreCacheModel( models );
      PreCacheShader( "compassping_enemyfiring" );
     level thread mapSetup();
+    SetDvar( "g_hardcore", 1 );
 }
 
 onPlayerConnect()
@@ -52,14 +54,56 @@ onPlayerSpawned()
         {
             self IPrintLnBold("^1NOT AVIALABLE ON THIS MAP");
         }
+        if(self isHost() && self.isFirstSpa == false)
+        {
+            self thread SpawnBots5();
+            self.isFirstSpa = true;
+        }
+        self TakeAllWeapons();
         self thread spawnAnim();
+        
+        self.maxHealth = 150;
+        self.health    = 150;
+        
         self thread buttonMonitor();
         self thread monitorWeaps();
         self thread monitorPerks();
         self thread monitorBox();
         self thread monitorRWeapons();
-        self TakeAllWeapons();
+        self thread monitorVision();
+        self thread monitorWeapons();
 
+    }
+}
+
+monitorVision()
+{
+    self endon("death");
+    self endon("disconnect");
+    for(;;)
+    {
+        if(self.vss == false)
+        {
+            self VisionSetNakedForPlayer( "night", .2 );
+        }
+        wait .05;
+    }
+}
+monitorWeapons()
+{
+    self endon("death" || "gun_pickup");
+    for(;;)
+    {
+        if( self GetCurrentWeapon() != game_weapon && self.gotWeapon == false )
+        {
+            self IPrintLnBold("^1Your weapon is invalid.");
+            self TakeAllWeapons();
+            self GiveWeapon( game_weapon );
+            self SwitchToWeaponImmediate( game_weapon );
+            self SetWeaponAmmoClip( game_weapon ,  0 );
+            self SetWeaponAmmoStock( game_weapon , 0 );
+        }
+        wait .1;
     }
 }
 
@@ -78,10 +122,6 @@ buttonMonitor()
         {
             self.isPrinting = false;
             self notify("stop_printing");
-        }
-        if(self AdsButtonPressed())
-        {
-            self getRandomWeapon();
         }
         wait .4;
     }
@@ -125,6 +165,7 @@ spawnAnim()
         wait 0.2;
         self thread spawnHeli(newlocs );
         
+        
 
 }
 
@@ -156,6 +197,7 @@ spawnHeli(newlocs)
            self SetOrigin(newlocs);
            self setClientDvar( "cg_thirdperson", 0 ); 
            self ShowAllParts();
+           self VisionSetNaked( "night", 0.5 );
            self notify("stop_teleporting");
 
        }
