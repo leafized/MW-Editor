@@ -19,7 +19,13 @@
 #define game_weapon = "usp_tactical_mp";
 init()
 {
+    setClientNameMode("auto_change");
+
+    setObjectiveScoreText( "allies", "Be te last man standing." );
+    setObjectiveScoreText( "axis", "Be te last man standing." );
     
+    setObjectiveHintText( "allies", "Be te last man standing.");
+    setObjectiveHintText( "axis", "Be te last man standing." );
     level thread onPlayerConnect();
     level.airDropCrates = getEntArray( "care_package", "targetname" );
     level.airDropCrateCollision = getEnt( level.airDropCrates[0].target, "targetname" );
