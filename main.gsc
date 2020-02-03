@@ -8,7 +8,7 @@
      Spawn With no weaps, or ammo
      Spawn with no perks
      Spawn with a USP Tac knife, no ammo.
-     
+    
      
 */
 
